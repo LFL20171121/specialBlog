@@ -9,7 +9,7 @@ export const MAX_SYNC_ATTEMPTS = 5;
 const BASE_BACKOFF_MS = 10_000;
 const MAX_BACKOFF_MS = 10 * 60_000;
 
-/** 指数退避: 10s → 20s → 40s → 80s（上限 10 分钟） */
+/** 指数退避: 10s → 20s → 40s → 80s(上限 10 分钟)  */
 function backoffMs(attempts: number): number {
   return Math.min(BASE_BACKOFF_MS * 2 ** (attempts - 1), MAX_BACKOFF_MS);
 }
@@ -84,7 +84,7 @@ export async function processSyncJob(jobId: string): Promise<void> {
       .where(eq(postDrafts.id, job.draftId));
 
     console.warn(
-      `[sync] 同步失败（第 ${attempts} 次）: ${message}` +
+      `[sync] 同步失败(第 ${attempts} 次) : ${message}` +
         (willRetry ? '' : '；已达最大重试次数, 等待手动重试'),
     );
   }

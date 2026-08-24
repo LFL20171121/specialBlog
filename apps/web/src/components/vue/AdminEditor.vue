@@ -3,12 +3,12 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { ApiError, apiFetch, type Draft } from '../../lib/api';
 
 /**
- * 后台草稿编辑器：Markdown 正文 + 元信息编辑、保存、发布。
- * 发布后轮询草稿状态，直观展示「待同步 → 已发布 / 同步失败」全过程。
+ * 后台草稿编辑器: Markdown 正文 + 元信息编辑、保存、发布。
+ * 发布后轮询草稿状态, 直观展示「待同步 → 已发布 / 同步失败」全过程。
  */
 const props = defineProps<{ draftId?: string }>();
 
-/** 静态页面通过 ?id= 查询参数传入草稿 ID，与 prop 二选一（SSR 阶段跳过） */
+/** 静态页面通过 ?id= 查询参数传入草稿 ID, 与 prop 二选一(SSR 阶段跳过)  */
 const routeDraftId =
   props.draftId ??
   (typeof window === 'undefined'
@@ -41,7 +41,7 @@ const statusLabel: Record<Draft['status'], string> = {
 /** 逗号分隔的标签输入 → 标签数组 */
 const tags = computed(() =>
   tagsInput.value
-    .split(/[,，]/)
+    .split(/[,, ]/)
     .map((tag) => tag.trim())
     .filter(Boolean),
 );
@@ -58,7 +58,7 @@ function applyDraft(value: Draft) {
   maybeStartPolling();
 }
 
-/** pending_sync 期间轮询最新状态，直到离开该状态 */
+/** pending_sync 期间轮询最新状态, 直到离开该状态 */
 function maybeStartPolling() {
   if (!draft.value || pollTimer) return;
   if (draft.value.status !== 'pending_sync') return;
@@ -123,7 +123,7 @@ async function save(): Promise<boolean> {
         body: JSON.stringify(payload),
       });
       applyDraft(data.draft);
-      // 新建后同步地址栏，刷新仍停留在编辑页
+      // 新建后同步地址栏, 刷新仍停留在编辑页
       history.replaceState(null, '', `/admin/posts/edit/?id=${data.draft.id}`);
       message.value = '草稿已创建';
     }
@@ -137,7 +137,7 @@ async function save(): Promise<boolean> {
 }
 
 async function publish() {
-  // 未保存过（或他人新建的）先落库，拿到 draftId 才能发布
+  // 未保存过(或他人新建的) 先落库, 拿到 draftId 才能发布
   if (!draft.value) {
     const ok = await save();
     if (!ok || !draft.value) return;
@@ -151,7 +151,7 @@ async function publish() {
       method: 'POST',
     });
     draft.value = data.draft;
-    message.value = '已创建同步任务，正在推送 Markdown 到 GitHub…';
+    message.value = '已创建同步任务, 正在推送 Markdown 到 GitHub…';
     maybeStartPolling();
   } catch (err) {
     error.value = err instanceof ApiError ? err.message : '发布失败';
@@ -169,7 +169,7 @@ async function publish() {
     </div>
 
     <p v-if="draft?.status === 'sync_failed'" class="sync-error">
-      同步失败：草稿已保留，可在<a href="/admin/">同步任务</a>中查看错误详情并手动重试。
+      同步失败: 草稿已保留, 可在<a href="/admin/">同步任务</a>中查看错误详情并手动重试。
     </p>
 
     <form class="meta-form" @submit.prevent="save">
@@ -180,11 +180,11 @@ async function publish() {
 
       <div class="field-row">
         <div class="field">
-          <label for="slug">slug（URL 路径）</label>
+          <label for="slug">slug(URL 路径) </label>
           <input id="slug" v-model="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="my-first-post" />
         </div>
         <div class="field">
-          <label for="tags">标签（逗号分隔）</label>
+          <label for="tags">标签(逗号分隔) </label>
           <input id="tags" v-model="tagsInput" placeholder="随笔, 技术" />
         </div>
       </div>
@@ -195,18 +195,18 @@ async function publish() {
       </div>
 
       <div class="field">
-        <label for="cover">封面图片 URL（可选）</label>
+        <label for="cover">封面图片 URL(可选) </label>
         <input id="cover" v-model="cover" placeholder="/images/cover.jpg" />
       </div>
 
       <label class="checkbox-row">
         <input v-model="featured" type="checkbox" />
-        设为精选文章（展示在首页）
+        设为精选文章(展示在首页) 
       </label>
     </form>
 
     <div class="field">
-      <label for="body">正文（Markdown）</label>
+      <label for="body">正文(Markdown) </label>
       <textarea id="body" v-model="body" rows="18" spellcheck="false" placeholder="# 从这里开始写作…" />
     </div>
 

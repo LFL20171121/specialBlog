@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 /**
  * 文章内容集合: 读取 src/content/posts 下的 Markdown。
  * frontmatter 校验失败会直接阻断构建并指出具体字段, 
- * 字段结构与后台同步到 GitHub 的 frontmatter 完全一致（见 apps/api/src/services/github.ts）。
+ * 字段结构与后台同步到 GitHub 的 frontmatter 完全一致(见 apps/api/src/services/github.ts) 。
  */
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),

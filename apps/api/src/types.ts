@@ -1,6 +1,6 @@
 /** API 层共享类型 */
 
-/** 已登录用户的安全视图（不含密码哈希等敏感字段） */
+/** 已登录用户的安全视图(不含密码哈希等敏感字段)  */
 export type SessionUser = {
   id: string;
   email: string;

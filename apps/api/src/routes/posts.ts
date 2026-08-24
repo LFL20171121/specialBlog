@@ -10,7 +10,7 @@ import type { AppEnv } from '../types';
 
 /**
  * 文章互动路由: /api/posts
- * 以稳定的 contentId 关联点赞与评论（slug 变更不影响数据）。
+ * 以稳定的 contentId 关联点赞与评论(slug 变更不影响数据) 。
  */
 export const postRoutes = new Hono<AppEnv>();
 
@@ -21,7 +21,7 @@ const commentCreateSchema = z.object({
   body: z.string().trim().min(1, '评论内容不能为空').max(2000, '评论最长 2000 字'),
 });
 
-/** 查询点赞数与当前用户点赞状态（未登录 liked 恒为 false） */
+/** 查询点赞数与当前用户点赞状态(未登录 liked 恒为 false)  */
 async function likeState(contentId: string, userId?: string) {
   const countRows = await db
     .select({ count: sql<number>`count(*)::int` })

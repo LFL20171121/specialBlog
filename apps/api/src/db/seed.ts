@@ -26,7 +26,7 @@ export async function ensureAdminSeed(): Promise<void> {
     nickname: env.ADMIN_NICKNAME,
     role: 'admin',
   });
-  console.log(`[seed] 已创建初始管理员: ${env.ADMIN_EMAIL}（密码来自 ADMIN_PASSWORD 环境变量）`);
+  console.log(`[seed] 已创建初始管理员: ${env.ADMIN_EMAIL}(密码来自 ADMIN_PASSWORD 环境变量) `);
 }
 
 // 直接执行 `npm run db:seed` 时运行

@@ -7,7 +7,7 @@ import { postRoutes } from './routes/posts';
 import { adminRoutes } from './routes/admin';
 import type { AppEnv } from './types';
 
-/** 组装 Hono 应用（与启动逻辑分离, 便于测试环境复用） */
+/** 组装 Hono 应用(与启动逻辑分离, 便于测试环境复用)  */
 export function createApp(): Hono<AppEnv> {
   const app = new Hono<AppEnv>().basePath('/api');
 

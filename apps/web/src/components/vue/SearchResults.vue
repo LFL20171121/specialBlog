@@ -2,8 +2,8 @@
 import { computed, onMounted, ref } from 'vue';
 
 /**
- * 站内搜索：构建期生成 /search.json 索引，浏览器端过滤，
- * 不依赖任何搜索服务，保证国内访问无外部依赖。
+ * 站内搜索: 构建期生成 /search.json 索引, 浏览器端过滤, 
+ * 不依赖任何搜索服务, 保证国内访问无外部依赖。
  */
 interface SearchItem {
   slug: string;
@@ -13,7 +13,7 @@ interface SearchItem {
   date: string;
 }
 
-/** SSR 阶段无 window，用空串兜底；客户端水合后再读取地址栏参数 */
+/** SSR 阶段无 window, 用空串兜底；客户端水合后再读取地址栏参数 */
 const query = ref(
   typeof window === 'undefined' ? '' : (new URLSearchParams(window.location.search).get('q') ?? ''),
 );
@@ -40,7 +40,7 @@ const results = computed(() => {
   });
 });
 
-/** 输入时同步地址栏，便于分享搜索结果链接 */
+/** 输入时同步地址栏, 便于分享搜索结果链接 */
 function syncUrl() {
   const keyword = query.value.trim();
   const url = keyword ? `/search/?q=${encodeURIComponent(keyword)}` : '/search/';
@@ -64,7 +64,7 @@ function syncUrl() {
     <p v-if="loading" class="hint">索引加载中…</p>
     <template v-else>
       <p v-if="query.trim()" class="result-count">找到 {{ results.length }} 篇相关文章</p>
-      <div v-if="results.length === 0" class="empty">没有找到相关内容，换个关键词试试？</div>
+      <div v-if="results.length === 0" class="empty">没有找到相关内容, 换个关键词试试？</div>
       <ul v-else class="result-list">
         <li v-for="item in results" :key="item.slug" class="result-item">
           <a class="title" :href="`/posts/${item.slug}/`">{{ item.title }}</a>

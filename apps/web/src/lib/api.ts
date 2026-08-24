@@ -1,7 +1,7 @@
 /**
  * 同源 API 请求封装。
- * 生产环境 /api 与静态站点同域名（由反向代理转发），开发环境由 Vite 代理，
- * 因此无需配置 baseURL，也天然规避跨域 Cookie 问题。
+ * 生产环境 /api 与静态站点同域名(由反向代理转发) , 开发环境由 Vite 代理, 
+ * 因此无需配置 baseURL, 也天然规避跨域 Cookie 问题。
  */
 export class ApiError extends Error {
   constructor(
@@ -20,7 +20,7 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
   });
 
   if (!response.ok) {
-    let message = `请求失败（HTTP ${response.status}）`;
+    let message = `请求失败(HTTP ${response.status}) `;
     try {
       const data = (await response.json()) as { error?: string };
       if (data.error) message = data.error;

@@ -1,7 +1,7 @@
 {
-  // 自包含配置：内联 astro/tsconfigs/strict 的全部选项，不依赖 extends 跨目录解析。
-  // 原因：npm workspaces 将 astro 提升至根 node_modules，且 Astro 5 的 base.json
-  // 使用 ${configDir} 占位符（TS 5.5+），部分 IDE TS 服务端无法解析会导致整个
+  // 自包含配置: 内联 astro/tsconfigs/strict 的全部选项, 不依赖 extends 跨目录解析。
+  // 原因: npm workspaces 将 astro 提升至根 node_modules, 且 Astro 5 的 base.json
+  // 使用 ${configDir} 占位符(TS 5.5+) , 部分 IDE TS 服务端无法解析会导致整个
   // 配置失效、文件落入 ES5 推断项目。选项与 astro/tsconfigs/strict 严格等价。
   "$schema":"https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {

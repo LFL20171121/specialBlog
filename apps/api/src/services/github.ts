@@ -10,7 +10,7 @@ export function draftGitPath(draft: Pick<PostDraft, 'slug'>): string {
 
 /**
  * 将草稿序列化为带 frontmatter 的 Markdown。
- * 字段与前台 Astro 内容集合的 schema（src/content.config.ts）保持对齐。
+ * 字段与前台 Astro 内容集合的 schema(src/content.config.ts) 保持对齐。
  */
 export function buildMarkdown(draft: PostDraft): string {
   const lines: string[] = [
@@ -55,14 +55,14 @@ export async function upsertMarkdown(draft: PostDraft): Promise<UpsertResult> {
   const path = draftGitPath(draft);
   const url = `${API_BASE}/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${encodeURI(path)}`;
 
-  // 更新已有文件必须携带当前 blob 的 sha；新建文件（404）不需要
+  // 更新已有文件必须携带当前 blob 的 sha；新建文件(404) 不需要
   let sha: string | undefined;
   const getRes = await fetch(url, { headers: githubHeaders() });
   if (getRes.ok) {
     const data = (await getRes.json()) as { sha?: string };
     sha = data.sha;
   } else if (getRes.status !== 404) {
-    throw new Error(`GitHub 查询文件失败（HTTP ${getRes.status}）`);
+    throw new Error(`GitHub 查询文件失败(HTTP ${getRes.status}) `);
   }
 
   const putRes = await fetch(url, {
@@ -78,7 +78,7 @@ export async function upsertMarkdown(draft: PostDraft): Promise<UpsertResult> {
 
   if (!putRes.ok) {
     const text = await putRes.text().catch(() => '');
-    throw new Error(`GitHub 写入失败（HTTP ${putRes.status}）: ${text.slice(0, 300)}`);
+    throw new Error(`GitHub 写入失败(HTTP ${putRes.status}) : ${text.slice(0, 300)}`);
   }
 
   const data = (await putRes.json()) as { commit: { sha: string } };

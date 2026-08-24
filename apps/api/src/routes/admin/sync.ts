@@ -31,7 +31,7 @@ adminSyncRoutes.get('/', async (c) => {
   return c.json({ jobs });
 });
 
-/** 手动重试: 重置失败任务（failed/超过次数）为 pending, 立即由 worker 处理 */
+/** 手动重试: 重置失败任务(failed/超过次数) 为 pending, 立即由 worker 处理 */
 adminSyncRoutes.post('/:id/retry', async (c) => {
   const id = c.req.param('id');
 

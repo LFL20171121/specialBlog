@@ -15,7 +15,7 @@ onMounted(async () => {
     count.value = state.count;
     liked.value = state.liked;
   } catch {
-    // 点赞数拉取失败时保持安静，不打扰阅读
+    // 点赞数拉取失败时保持安静, 不打扰阅读
   }
 });
 
@@ -32,10 +32,10 @@ async function toggle() {
   } catch (err) {
     if (err instanceof ApiError) {
       if (err.status === 401) notice.value = '登录后才能点赞';
-      else if (err.status === 429) notice.value = '操作太频繁，请稍后再试';
+      else if (err.status === 429) notice.value = '操作太频繁, 请稍后再试';
       else notice.value = err.message;
     } else {
-      notice.value = '网络异常，请稍后再试';
+      notice.value = '网络异常, 请稍后再试';
     }
   } finally {
     loading.value = false;

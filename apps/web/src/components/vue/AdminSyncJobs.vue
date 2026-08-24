@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { ApiError, apiFetch, type SyncJob } from '../../lib/api';
 
-/** 同步任务面板：观察发布状态、错误详情，手动重试失败任务 */
+/** 同步任务面板: 观察发布状态、错误详情, 手动重试失败任务 */
 const jobs = ref<SyncJob[]>([]);
 const loading = ref(true);
 const error = ref('');
@@ -58,7 +58,7 @@ async function retry(job: SyncJob) {
 
     <p v-if="error" class="error">{{ error }}</p>
     <p v-if="loading" class="hint">加载中…</p>
-    <div v-else-if="jobs.length === 0" class="hint empty">暂无同步任务，发布文章后会在这里出现</div>
+    <div v-else-if="jobs.length === 0" class="hint empty">暂无同步任务, 发布文章后会在这里出现</div>
 
     <div v-else class="table-wrap">
       <table>

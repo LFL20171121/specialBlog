@@ -8,7 +8,7 @@ import { postDrafts, syncJobs } from '../../db/schema';
 import { parseJsonBody } from '../../lib/validation';
 import type { AppEnv } from '../../types';
 
-/** 草稿管理: /api/admin/drafts（requireAdmin 由聚合路由统一挂载） */
+/** 草稿管理: /api/admin/drafts(requireAdmin 由聚合路由统一挂载)  */
 export const adminDraftRoutes = new Hono<AppEnv>();
 
 const draftInputSchema = z.object({
@@ -94,7 +94,7 @@ adminDraftRoutes.put('/:id', async (c) => {
 
 /**
  * 删除草稿: 仅删除数据库记录。
- * 已发布文章的仓库文件删除同步属于后续增强（第一期非目标）, 此处不自动触发。
+ * 已发布文章的仓库文件删除同步属于后续增强(第一期非目标) , 此处不自动触发。
  */
 adminDraftRoutes.delete('/:id', async (c) => {
   await getDraftOr404(c.req.param('id'));

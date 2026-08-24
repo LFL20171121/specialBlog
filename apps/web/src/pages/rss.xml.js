@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { getPublishedPosts } from '../lib/posts';
 
-/** RSS 订阅源：构建期生成静态 XML */
+/** RSS 订阅源: 构建期生成静态 XML */
 export async function GET(context) {
   const posts = await getPublishedPosts();
 

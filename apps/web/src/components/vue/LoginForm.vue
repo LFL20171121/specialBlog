@@ -26,11 +26,11 @@ async function submit() {
       body: JSON.stringify(payload),
     });
 
-    // 登录态由 HttpOnly Cookie 维护，直接跳转
+    // 登录态由 HttpOnly Cookie 维护, 直接跳转
     location.href = '/account/';
   } catch (err) {
     if (err instanceof ApiError) error.value = err.message;
-    else error.value = '网络异常，请稍后再试';
+    else error.value = '网络异常, 请稍后再试';
   } finally {
     submitting.value = false;
   }
@@ -98,7 +98,7 @@ async function submit() {
       </button>
     </form>
 
-    <p class="oauth-hint">GitHub / Google 第三方登录将在后续版本提供，当前请使用邮箱登录。</p>
+    <p class="oauth-hint">GitHub / Google 第三方登录将在后续版本提供, 当前请使用邮箱登录。</p>
   </div>
 </template>
 

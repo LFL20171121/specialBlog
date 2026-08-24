@@ -5,7 +5,7 @@ import type { AppEnv, SessionUser } from '../types';
 
 /**
  * 会话中间件: 解析 HttpOnly Cookie 中的会话令牌, 
- * 将当前用户（未登录为 null）注入上下文, 供后续路由读取。
+ * 将当前用户(未登录为 null) 注入上下文, 供后续路由读取。
  */
 export const sessionMiddleware = createMiddleware<AppEnv>(async (c, next) => {
   const token = getCookie(c, sessionCookieName);
@@ -21,7 +21,7 @@ export const requireUser = createMiddleware<AppEnv>(async (c, next) => {
   await next();
 });
 
-/** 管理员保护: 路由层第一道校验（服务层与数据库约束为其兜底） */
+/** 管理员保护: 路由层第一道校验(服务层与数据库约束为其兜底)  */
 export const requireAdmin = createMiddleware<AppEnv>(async (c, next) => {
   const user: SessionUser | null = c.get('user');
   if (!user) {

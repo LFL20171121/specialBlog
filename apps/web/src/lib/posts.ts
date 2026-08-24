@@ -2,7 +2,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 
 export type Post = CollectionEntry<'posts'>;
 
-/** 获取已发布（非草稿）文章，按发布日期倒序 */
+/** 获取已发布(非草稿) 文章, 按发布日期倒序 */
 export async function getPublishedPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', (post) => !post.data.draft);
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -12,7 +12,7 @@ export async function getFeaturedPosts(): Promise<Post[]> {
   return (await getPublishedPosts()).filter((post) => post.data.featured);
 }
 
-/** 汇总所有标签（去重） */
+/** 汇总所有标签(去重)  */
 export async function getAllTags(): Promise<string[]> {
   const posts = await getPublishedPosts();
   return [...new Set(posts.flatMap((post) => post.data.tags))];
@@ -24,7 +24,7 @@ export interface Heading {
   id: string;
 }
 
-/** 与 GitHub slugger 行为近似的标题 id 生成（保留中日韩文字与数字） */
+/** 与 GitHub slugger 行为近似的标题 id 生成(保留中日韩文字与数字)  */
 export function slugifyHeading(text: string): string {
   return text
     .toLowerCase()
@@ -33,7 +33,7 @@ export function slugifyHeading(text: string): string {
     .replace(/\s+/g, '-');
 }
 
-/** 从 Markdown 源文本提取 h2/h3 生成目录，跳过代码块中的匹配行 */
+/** 从 Markdown 源文本提取 h2/h3 生成目录, 跳过代码块中的匹配行 */
 export function extractHeadings(markdown: string): Heading[] {
   const headings: Heading[] = [];
   let inCodeBlock = false;

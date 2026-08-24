@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { z } from 'zod';
 
 /**
- * 简易 .env 加载器（零依赖）。
+ * 简易 .env 加载器(零依赖) 。
  * 依次尝试 apps/api/.env 与仓库根目录 .env, 已存在的进程变量不覆盖。
  * 生产环境建议直接注入进程环境变量, 而不是依赖 .env 文件。
  */
@@ -42,18 +42,18 @@ const envSchema = z.object({
     .string()
     .default('postgres://postgres:postgres@localhost:5432/personal_blog'),
 
-  /** 会话有效期（小时） */
+  /** 会话有效期(小时)  */
   SESSION_TTL_HOURS: z.coerce.number().int().positive().default(24 * 7),
 
-  /** 初始管理员（首次启动自动创建, 幂等） */
+  /** 初始管理员(首次启动自动创建, 幂等)  */
   ADMIN_EMAIL: z.string().email().default('admin@example.com'),
   ADMIN_PASSWORD: z.string().min(8).default('admin123456'),
   ADMIN_NICKNAME: z.string().default('站长'),
 
-  /** 同步 worker 轮询间隔（毫秒） */
+  /** 同步 worker 轮询间隔(毫秒)  */
   SYNC_WORKER_INTERVAL_MS: z.coerce.number().int().positive().default(15_000),
 
-  /** GitHub 内容同步配置, 未配置时发布任务进入失败重试流程（便于演示） */
+  /** GitHub 内容同步配置, 未配置时发布任务进入失败重试流程(便于演示)  */
   GITHUB_TOKEN: z.string().optional(),
   GITHUB_OWNER: z.string().optional(),
   GITHUB_REPO: z.string().optional(),
@@ -65,6 +65,6 @@ const envSchema = z.object({
 
 export const env = envSchema.parse(process.env);
 
-/** GitHub 是否已配置完整（三者齐备才可真正同步） */
+/** GitHub 是否已配置完整(三者齐备才可真正同步)  */
 export const isGithubConfigured = (): boolean =>
   Boolean(env.GITHUB_TOKEN && env.GITHUB_OWNER && env.GITHUB_REPO);

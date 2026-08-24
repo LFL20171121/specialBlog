@@ -49,7 +49,7 @@ const headings = extractHeadings(post.body ?? '');
           <Content />
         </div>
 
-        <!-- 互动组件：以稳定的 contentId 关联，与 slug 解耦 -->
+        <!-- 互动组件: 以稳定的 contentId 关联, 与 slug 解耦 -->
         <div class="post-interactions">
           <LikeButton client:load contentId={post.data.contentId} />
           <CommentSection client:visible contentId={post.data.contentId} />
@@ -74,7 +74,7 @@ const headings = extractHeadings(post.body ?? '');
 </style>
 
 <script>
-  // 阅读进度条：随滚动填充顶部渐变条
+  // 阅读进度条: 随滚动填充顶部渐变条
   const bar = document.getElementById('reading-progress');
   const article = document.querySelector('.prose');
 

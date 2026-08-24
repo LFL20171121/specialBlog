@@ -8,7 +8,7 @@ const comments = ref<PublicComment[]>([]);
 const body = ref('');
 const submitting = ref(false);
 const loading = ref(true);
-/** 提交后的状态提示：审核中 / 未登录 / 限流 / 错误 */
+/** 提交后的状态提示: 审核中 / 未登录 / 限流 / 错误 */
 const notice = ref<{ type: 'info' | 'error'; text: string } | null>(null);
 const loggedIn = ref(false);
 
@@ -29,7 +29,7 @@ async function loadComments() {
     );
     comments.value = data.comments;
   } catch {
-    // 评论区加载失败时静默，保留输入能力
+    // 评论区加载失败时静默, 保留输入能力
   } finally {
     loading.value = false;
   }
@@ -37,7 +37,7 @@ async function loadComments() {
 
 onMounted(async () => {
   loadComments();
-  // 顺带探测登录态，用于提示
+  // 顺带探测登录态, 用于提示
   try {
     await apiFetch('/api/auth/me');
     loggedIn.value = true;
@@ -55,16 +55,16 @@ async function submit() {
       method: 'POST',
       body: JSON.stringify({ body: body.value }),
     });
-    // 进入审核队列，通过后对所有人可见
+    // 进入审核队列, 通过后对所有人可见
     body.value = '';
-    notice.value = { type: 'info', text: '评论已提交，审核通过后将公开显示' };
+    notice.value = { type: 'info', text: '评论已提交, 审核通过后将公开显示' };
   } catch (err) {
     if (err instanceof ApiError) {
       if (err.status === 401) notice.value = { type: 'error', text: '请先登录后再发表评论' };
-      else if (err.status === 429) notice.value = { type: 'error', text: '评论太频繁，请稍后再试' };
+      else if (err.status === 429) notice.value = { type: 'error', text: '评论太频繁, 请稍后再试' };
       else notice.value = { type: 'error', text: err.message };
     } else {
-      notice.value = { type: 'error', text: '网络异常，请稍后再试' };
+      notice.value = { type: 'error', text: '网络异常, 请稍后再试' };
     }
   } finally {
     submitting.value = false;
@@ -74,17 +74,17 @@ async function submit() {
 
 <template>
   <section class="comment-section" aria-label="评论区">
-    <h3>评论（{{ comments.length }}）</h3>
+    <h3>评论({{ comments.length }}) </h3>
 
     <div class="comment-form">
       <p v-if="!loggedIn" class="login-hint">
-        <a href="/login/">登录</a> 后即可参与评论，评论将经过审核后公开。
+        <a href="/login/">登录</a> 后即可参与评论, 评论将经过审核后公开。
       </p>
       <textarea
         v-model="body"
         rows="3"
         maxlength="2000"
-        placeholder="写下你的想法…（审核通过后显示）"
+        placeholder="写下你的想法…(审核通过后显示) "
         :disabled="!loggedIn"
       />
       <div class="form-footer">
@@ -97,7 +97,7 @@ async function submit() {
     </div>
 
     <p v-if="loading" class="loading">评论加载中…</p>
-    <div v-else-if="comments.length === 0" class="empty">还没有评论，来说第一句吧。</div>
+    <div v-else-if="comments.length === 0" class="empty">还没有评论, 来说第一句吧。</div>
     <ul v-else class="comment-list">
       <li v-for="comment in comments" :key="comment.id" class="comment-item">
         <div class="avatar" aria-hidden="true">{{ comment.author.nickname.slice(0, 1) }}</div>

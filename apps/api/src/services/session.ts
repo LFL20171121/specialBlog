@@ -7,7 +7,7 @@ import type { SessionUser } from '../types';
 
 export const sessionCookieName = 'blog_session';
 
-/** 生成 256 位随机会话令牌（存入 Cookie 的明文） */
+/** 生成 256 位随机会话令牌(存入 Cookie 的明文)  */
 function generateSessionToken(): string {
   return randomBytes(32).toString('base64url');
 }

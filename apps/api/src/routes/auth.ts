@@ -50,7 +50,7 @@ authRoutes.post('/register', authLimiter, async (c) => {
     .insert(profiles)
     .values({
       email: body.email,
-      // Argon2id（@node-rs/argon2 默认算法）, 只保存哈希
+      // Argon2id(@node-rs/argon2 默认算法) , 只保存哈希
       passwordHash: await hash(body.password),
       nickname: body.nickname,
     })

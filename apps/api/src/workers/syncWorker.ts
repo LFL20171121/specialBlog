@@ -9,7 +9,7 @@ const BATCH_SIZE = 5;
 
 /**
  * 后台同步 worker: 定时拉取到期的 pending 任务并处理。
- * 单进程内嵌实现（与 API 同进程）；如果未来任务量大, 
+ * 单进程内嵌实现(与 API 同进程) ；如果未来任务量大, 
  * 可将其独立为进程, 逻辑无需改动。
  */
 export function startSyncWorker(): () => void {

@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { ApiError, apiFetch, type Draft } from '../../lib/api';
 
-/** 后台文章列表：状态总览 + 发布 / 编辑 / 删除 */
+/** 后台文章列表: 状态总览 + 发布 / 编辑 / 删除 */
 const drafts = ref<Draft[]>([]);
 const loading = ref(true);
 const error = ref('');
@@ -66,7 +66,7 @@ async function remove(draft: Draft) {
 }
 
 function edit(draft: Draft) {
-  // 静态后台页面：编辑器通过查询参数获取草稿 ID
+  // 静态后台页面: 编辑器通过查询参数获取草稿 ID
   location.href = `/admin/posts/edit/?id=${draft.id}`;
 }
 </script>
@@ -81,7 +81,7 @@ function edit(draft: Draft) {
     <p v-if="error" class="error">{{ error }}</p>
     <p v-if="loading" class="hint">加载中…</p>
     <div v-else-if="drafts.length === 0" class="hint empty">
-      还没有任何文章，点击右上角「新建文章」开始创作。
+      还没有任何文章, 点击右上角「新建文章」开始创作。
     </div>
 
     <div v-else class="table-wrap">

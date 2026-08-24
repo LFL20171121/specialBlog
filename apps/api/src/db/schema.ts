@@ -38,7 +38,7 @@ export const syncJobStatusEnum = pgEnum('sync_job_status', [
 /* ==================== 表 ==================== */
 
 /**
- * 用户（profiles）: 邮箱密码注册, GitHub/Google OAuth 可后续扩展（provider 字段预留思路）。
+ * 用户(profiles) : 邮箱密码注册, GitHub/Google OAuth 可后续扩展(provider 字段预留思路) 。
  * 密码使用 Argon2id 哈希, 禁止保存明文。
  */
 export const profiles = pgTable('profiles', {
@@ -52,8 +52,8 @@ export const profiles = pgTable('profiles', {
 });
 
 /**
- * 会话（sessions）: HttpOnly Cookie 中的随机令牌 → 哈希后落库。
- * 便于服务端主动吊销会话（登出、封禁）。
+ * 会话(sessions) : HttpOnly Cookie 中的随机令牌 → 哈希后落库。
+ * 便于服务端主动吊销会话(登出、封禁) 。
  */
 export const sessions = pgTable(
   'sessions',
@@ -70,8 +70,8 @@ export const sessions = pgTable(
 );
 
 /**
- * 草稿（post_drafts）: 后台编辑与发布状态的唯一事实来源。
- * contentId 是文章的稳定标识（关联评论/点赞）, slug 只负责 URL, 可变更。
+ * 草稿(post_drafts) : 后台编辑与发布状态的唯一事实来源。
+ * contentId 是文章的稳定标识(关联评论/点赞) , slug 只负责 URL, 可变更。
  */
 export const postDrafts = pgTable(
   'post_drafts',
@@ -99,7 +99,7 @@ export const postDrafts = pgTable(
   (table) => [index('post_drafts_status_idx').on(table.status)],
 );
 
-/** 评论（comments）: 按 contentId 关联文章, 默认 pending, 审核通过后公开 */
+/** 评论(comments) : 按 contentId 关联文章, 默认 pending, 审核通过后公开 */
 export const comments = pgTable(
   'comments',
   {
@@ -116,7 +116,7 @@ export const comments = pgTable(
   (table) => [index('comments_content_id_idx').on(table.contentId, table.status)],
 );
 
-/** 点赞（likes）: (user_id, content_id) 唯一约束保证一人一篇只能一赞 */
+/** 点赞(likes) : (user_id, content_id) 唯一约束保证一人一篇只能一赞 */
 export const likes = pgTable(
   'likes',
   {
@@ -133,7 +133,7 @@ export const likes = pgTable(
 );
 
 /**
- * 同步任务（sync_jobs）: 发布 → 创建任务 → worker 调 GitHub API。
+ * 同步任务(sync_jobs) : 发布 → 创建任务 → worker 调 GitHub API。
  * 失败按指数退避自动重试, 超过最大次数转 failed 等待手动重试。
  */
 export const syncJobs = pgTable(
@@ -143,7 +143,7 @@ export const syncJobs = pgTable(
     draftId: uuid('draft_id')
       .notNull()
       .references(() => postDrafts.id, { onDelete: 'cascade' }),
-    /** 发布时的草稿版本, 同一 revision 只允许一个未完成任务（幂等） */
+    /** 发布时的草稿版本, 同一 revision 只允许一个未完成任务(幂等)  */
     revision: integer('revision').notNull(),
     status: syncJobStatusEnum('status').notNull().default('pending'),
     attempts: integer('attempts').notNull().default(0),

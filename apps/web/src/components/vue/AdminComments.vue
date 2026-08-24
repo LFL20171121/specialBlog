@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue';
 import { ApiError, apiFetch, type AdminComment } from '../../lib/api';
 
-/** 评论审核面板：按状态筛选，通过 / 隐藏 / 删除 */
+/** 评论审核面板: 按状态筛选, 通过 / 隐藏 / 删除 */
 type StatusFilter = 'all' | 'pending' | 'approved' | 'hidden';
 
 const filter = ref<StatusFilter>('pending');
