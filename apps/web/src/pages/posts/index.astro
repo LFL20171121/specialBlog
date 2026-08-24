@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getAllTags, getPublishedPosts } from '../../lib/posts';
+
+const posts = await getPublishedPosts();
+const tags = await getAllTags();
+---
+
+<BaseLayout title="全部文章 · 星河博客">
+  <div class="container">
+    <header class="page-header">
+      <h1>全部文章</h1>
+      <p class="sub">共 {posts.length} 篇 · 涉及 {tags.length} 个标签</p>
+    </header>
+
+    {
+      tags.length > 0 && (
+        <div class="tag-list" style="margin-bottom: 32px;">
+          {tags.map((tag) => (
+            <a class="tag-pill" href={`/tags/${encodeURIComponent(tag)}/`}>
+              {tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      posts.length > 0 ? (
+        <div class="post-grid">
+          {posts.map((post) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">还没有发布任何文章</div>
+      )
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AccountPanel from '../components/vue/AccountPanel.vue';
+---
+
+<BaseLayout title="我的账户 · 星河博客" description="查看账户信息与退出登录">
+  <div class="container">
+    <header class="page-header">
+      <h1>我的账户</h1>
+    </header>
+    <AccountPanel client:load />
+  </div>
+</BaseLayout>

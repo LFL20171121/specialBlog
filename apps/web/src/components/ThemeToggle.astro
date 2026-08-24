@@ -1,0 +1,60 @@
+---
+/** 明暗主题切换：状态存 localStorage，默认深色（沉浸式视觉方向） */
+---
+
+<button
+  id="theme-toggle"
+  class="theme-toggle"
+  type="button"
+  aria-label="切换明暗主题"
+  title="切换明暗主题"
+>
+  <span class="icon-sun" aria-hidden="true">☀</span>
+  <span class="icon-moon" aria-hidden="true">☾</span>
+</button>
+
+<style>
+  .theme-toggle {
+    margin-left: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    color: var(--text);
+    cursor: pointer;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+  }
+
+  /* 深色主题下显示太阳（点击切换到浅色），浅色反之 */
+  .icon-sun,
+  .icon-moon {
+    display: none;
+  }
+
+  :global([data-theme='dark']) .icon-sun {
+    display: inline;
+  }
+
+  :global([data-theme='light']) .icon-moon {
+    display: inline;
+  }
+</style>
+
+<script>
+  const button = document.getElementById('theme-toggle');
+  button?.addEventListener('click', () => {
+    const current = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+  });
+</script>

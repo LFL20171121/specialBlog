@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import AdminEditor from '../../../components/vue/AdminEditor.vue';
+---
+
+<BaseLayout title="新建文章 · 星河博客" description="新建博客文章草稿">
+  <div class="container">
+    <header class="page-header">
+      <h1>新建文章</h1>
+    </header>
+    <AdminEditor client:load />
+  </div>
+</BaseLayout>

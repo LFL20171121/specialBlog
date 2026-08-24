@@ -1,0 +1,91 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostToc from '../../components/PostToc.astro';
+import LikeButton from '../../components/vue/LikeButton.vue';
+import CommentSection from '../../components/vue/CommentSection.vue';
+import { extractHeadings, formatDate, getPublishedPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const headings = extractHeadings(post.body ?? '');
+---
+
+<BaseLayout title={`${post.data.title} · 星河博客`} description={post.data.description}>
+  <div class="container">
+    <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+
+    <article class="post-layout">
+      <div>
+        <header class="post-header">
+          <h1>{post.data.title}</h1>
+          <div class="post-meta-row">
+            <time datetime={post.data.date.toISOString()}>发布于 {formatDate(post.data.date)}</time>
+            {
+              post.data.updatedAt && (
+                <span>· 更新于 {formatDate(post.data.updatedAt)}</span>
+              )
+            }
+            {
+              post.data.tags.length > 0 && (
+                <span class="tag-list">
+                  {post.data.tags.map((tag) => (
+                    <a class="tag-pill" href={`/tags/${encodeURIComponent(tag)}/`}>
+                      {tag}
+                    </a>
+                  ))}
+                </span>
+              )
+            }
+          </div>
+        </header>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        <!-- 互动组件：以稳定的 contentId 关联，与 slug 解耦 -->
+        <div class="post-interactions">
+          <LikeButton client:load contentId={post.data.contentId} />
+          <CommentSection client:visible contentId={post.data.contentId} />
+        </div>
+      </div>
+
+      <PostToc headings={headings} />
+    </article>
+  </div>
+</BaseLayout>
+
+<style>
+  .post-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin: 56px 0 0;
+  }
+
+  .post-interactions {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+</style>
+
+<script>
+  // 阅读进度条：随滚动填充顶部渐变条
+  const bar = document.getElementById('reading-progress');
+  const article = document.querySelector('.prose');
+
+  if (bar && article) {
+    const update = () => {
+      const rect = article.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const passed = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+      bar.style.width = `${total > 0 ? (passed / total) * 100 : 100}%`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

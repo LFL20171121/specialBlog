@@ -1,0 +1,81 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = '一个关于技术、阅读与生活的个人博客' } = Astro.props;
+
+const navItems = [
+  { href: '/', label: '首页', match: (path: string) => path === '/' },
+  { href: '/posts/', label: '文章', match: (path: string) => path.startsWith('/posts') },
+  { href: '/about/', label: '关于', match: (path: string) => path.startsWith('/about') },
+  { href: '/search/', label: '搜索', match: (path: string) => path.startsWith('/search') },
+  { href: '/login/', label: '登录', match: (path: string) => path.startsWith('/login') },
+];
+
+const currentPath = Astro.url.pathname;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/rss.xml" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>"
+    />
+    <!-- 主题初始化必须内联在 head，避免暗色模式闪白 -->
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem('theme');
+        const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+        document.documentElement.dataset.theme = theme;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主内容</a>
+
+    <header class="site-header">
+      <div class="container inner">
+        <a class="site-logo" href="/">✦ 星河博客</a>
+        <nav class="site-nav" aria-label="主导航">
+          {
+            navItems.map((item) => (
+              <a href={item.href} class={item.match(currentPath) ? 'active' : ''}>
+                {item.label}
+              </a>
+            ))
+          }
+          <ThemeToggle />
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container inner">
+        <span>© {year} 星河博客 · 用文字记录热爱</span>
+        <span>
+          <a href="/rss.xml">RSS</a> · <a href="/sitemap-index.xml">Sitemap</a> · Powered by
+          Astro + Hono
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

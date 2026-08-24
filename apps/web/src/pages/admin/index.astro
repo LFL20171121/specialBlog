@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AdminComments from '../../components/vue/AdminComments.vue';
+import AdminSyncJobs from '../../components/vue/AdminSyncJobs.vue';
+---
+
+<BaseLayout title="管理后台 · 星河博客" description="博客管理后台">
+  <div class="container">
+    <header class="page-header">
+      <h1>管理后台</h1>
+      <p class="sub">仅管理员可见；所有操作均经服务端权限校验</p>
+    </header>
+
+    <nav class="admin-nav" aria-label="后台导航">
+      <a class="btn" href="/admin/posts/">📝 文章管理</a>
+      <a class="btn btn-ghost" href="/">← 返回博客</a>
+    </nav>
+
+    <section class="section">
+      <AdminComments client:load />
+    </section>
+
+    <section class="section">
+      <AdminSyncJobs client:load />
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .admin-nav {
+    display: flex;
+    gap: 12px;
+    margin: 24px 0 8px;
+  }
+</style>

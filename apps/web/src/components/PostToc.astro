@@ -1,0 +1,24 @@
+---
+import type { Heading } from '../lib/posts';
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+---
+
+{
+  headings.length > 0 && (
+    <nav class="toc" aria-label="文章目录">
+      <div class="toc-title">目录</div>
+      <ul>
+        {headings.map((heading) => (
+          <li class={heading.depth === 3 ? 'level-3' : ''}>
+            <a href={`#${heading.id}`}>{heading.text}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchResults from '../components/vue/SearchResults.vue';
+---
+
+<BaseLayout title="搜索 · 星河博客" description="站内文章搜索">
+  <div class="container">
+    <header class="page-header">
+      <h1>搜索</h1>
+      <p class="sub">在站内文章的标题、摘要与标签中查找</p>
+    </header>
+    <SearchResults client:load />
+  </div>
+</BaseLayout>

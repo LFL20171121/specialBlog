@@ -1,0 +1,30 @@
+---
+import type { Post } from '../lib/posts';
+import { formatDate } from '../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+---
+
+<article class="post-card">
+  <div class="meta">
+    <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+    {post.data.updatedAt && <span>· 更新于 {formatDate(post.data.updatedAt)}</span>}
+  </div>
+  <h3><a href={`/posts/${post.id}/`}>{post.data.title}</a></h3>
+  <p class="desc">{post.data.description}</p>
+  {
+    post.data.tags.length > 0 && (
+      <div class="tag-list">
+        {post.data.tags.map((tag) => (
+          <a class="tag-pill" href={`/tags/${encodeURIComponent(tag)}/`}>
+            {tag}
+          </a>
+        ))}
+      </div>
+    )
+  }
+</article>
