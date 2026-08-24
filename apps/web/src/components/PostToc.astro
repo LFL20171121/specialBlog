@@ -15,10 +15,58 @@ const { headings } = Astro.props;
       <ul>
         {headings.map((heading) => (
           <li class={heading.depth === 3 ? 'level-3' : ''}>
-            <a href={`#${heading.id}`}>{heading.text}</a>
+            <a href={`#${heading.id}`} title={heading.text}>
+              {heading.text}
+            </a>
           </li>
         ))}
       </ul>
     </nav>
   )
 }
+
+<script>
+  // 目录滚动跟随(scrollspy): 高亮当前阅读章节, 并让目录容器自动滚到可见
+  const toc = document.querySelector<HTMLElement>('.toc');
+  const links = toc ? Array.from(toc.querySelectorAll<HTMLAnchorElement>('a')) : [];
+
+  if (toc && links.length > 0) {
+    // 文章正文里的真实标题(按文档顺序, Astro 渲染时已写入与目录一致的 id)
+    const postHeadings = Array.from(
+      document.querySelectorAll<HTMLElement>('.prose h2[id], .prose h3[id]'),
+    );
+
+    let activeId = '';
+    const highlight = (id: string) => {
+      if (id === activeId) return;
+      activeId = id;
+
+      for (const a of links) {
+        a.classList.toggle('active', a.hash === `#${id}`);
+      }
+
+      // 目录容器跟随: 让当前项尽量停在目录可视区中部
+      const link = links.find((a) => a.hash === `#${id}`);
+      if (link) {
+        toc.scrollTop = link.offsetTop - toc.clientHeight / 2 + link.clientHeight / 2;
+      }
+    };
+
+    const update = () => {
+      // 以导航栏下沿(约 120px)作为"正在阅读"参考线
+      const line = window.scrollY + 120;
+      let current = '';
+      for (const h of postHeadings) {
+        if (h.getBoundingClientRect().top + window.scrollY <= line) {
+          current = h.id;
+        } else {
+          break;
+        }
+      }
+      highlight(current);
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

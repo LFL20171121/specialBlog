@@ -322,6 +322,7 @@ h4 {
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -376,6 +377,8 @@ h4 {
 .prose h2,
 .prose h3 {
   margin-top: 2.2em;
+  /* 锚点跳转时标题落在导航栏下方, 不被遮挡 */
+  scroll-margin-top: 110px;
 }
 
 .prose h2 {
@@ -456,7 +459,7 @@ h4 {
 
 @media (min-width: 1000px) {
   .post-layout {
-    grid-template-columns: minmax(0, 1fr) 220px;
+    grid-template-columns: minmax(0, 1fr) 300px;
   }
 }
 
@@ -491,6 +494,19 @@ h4 {
   color: var(--text-muted);
   border-left: 2px solid var(--border);
   padding-left: 16px;
+  /* 标题很多时目录可独立滚动, sticky 不被超高内容卡死 */
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.toc::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
 }
 
 .toc .toc-title {
@@ -511,10 +527,21 @@ h4 {
 .toc a {
   color: var(--text-muted);
   display: block;
+  /* 长标题单行截断, 完整内容通过 title 悬浮提示 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s ease;
 }
 
-.toc a:hover {
+.toc a:hover,
+.toc a.active {
   color: var(--accent);
+}
+
+/* 当前阅读章节的强调: 左侧渐变短条 */
+.toc a.active {
+  font-weight: 600;
 }
 
 .toc .level-3 {

@@ -13,7 +13,10 @@
     "build": "npm run build -w apps/web",
     "typecheck": "npm run typecheck -w apps/api",
     "db:push": "npm run db:push -w apps/api",
-    "db:seed": "npm run db:seed -w apps/api"
+    "db:seed": "npm run db:seed -w apps/api",
+    "new-post": "npm run new-post -w apps/web",
+    "new:draft": "npm run new:draft -w apps/web",
+    "new:template": "npm run new:template -w apps/web"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"

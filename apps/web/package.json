@@ -9,7 +9,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "vue-tsc --noEmit && astro check"
+    "typecheck": "vue-tsc --noEmit && astro check",
+    "new-post": "node scripts/new-post.mjs",
+    "new:draft": "node scripts/new-post.mjs --draft=y",
+    "new:template": "node scripts/new-post.mjs --template"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.11",
