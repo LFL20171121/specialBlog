@@ -18,7 +18,11 @@
     "skipLibCheck": true,
     "allowJs": true,
     "jsx": "preserve",
-    "strict": true
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist", "node_modules"]

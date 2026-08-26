@@ -1,6 +1,6 @@
 import { and, eq, ne } from 'drizzle-orm';
-import { db } from '../db';
-import { postDrafts, syncJobs, type SyncJob } from '../db/schema';
+import { db } from '@/db';
+import { postDrafts, syncJobs, type SyncJob } from '@/db/schema';
 import { draftGitPath, upsertMarkdown } from './github';
 
 /** 自动重试上限, 超过后任务转 failed, 等待管理员手动重试 */

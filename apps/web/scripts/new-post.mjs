@@ -1,4 +1,4 @@
-import { createHash, randomBytes } from "node:crypto";
+import { randomBytes } from "node:crypto";
 import { createInterface } from "node:readline/promises";
 import { mkdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";

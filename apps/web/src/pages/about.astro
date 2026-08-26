@@ -1,50 +1,97 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
-<BaseLayout title="关于我 · 星河博客" description="博客作者的个人介绍: 兴趣、技能与外部链接。">
+<BaseLayout
+  title="关于我 · 博客L@G"
+  description="博客作者的个人介绍: 兴趣、技能与外部链接。"
+>
   <div class="container">
     <header class="page-header">
-      <h1>关于我</h1>
-      <p class="sub">写字的人, 也是写代码的人。</p>
+      <h1 style="color: #0c7d57;">关于我</h1>
+      <p class="sub">researching & coding; living and interesting.</p>
     </header>
-
+    
     <article class="prose">
-      <p>
-        你好, 我是星河。白天写代码, 晚上写文字, 周末读书。
-        这个博客是我给自己搭的一间小屋——所有文章都在这里首发, 也永远留存。
-      </p>
+      
+      <p>你好, 我是顾赛赛。白天上班, 晚上coding, 周末带娃。</p>
+      <p>这个博客是我给自己搭的一间小屋——所有内容都在这里首发, 也永远留存。</p>
 
-      <h2>我在做什么</h2>
-      <p>
-        我主要关注 Web 前端与 Node.js
-        方向, 喜欢研究那些「构建体验」的细节: 编辑器、静态站点、增量构建, 以及一切能让写作和发布变流畅的东西。
-        这个博客本身就是我的试验田——它用 Astro 和 Vue 搭建, 后台用 Hono 和 PostgreSQL, 文章以
-        Markdown 的形式托管在 Git 仓库里。
-      </p>
-
-      <h2>兴趣清单</h2>
+      <h2 style="color: #12ad79;">what I am doing?</h2>
       <ul>
+        <li>主要关注 Python Web 前端与 Node.js 方向,</li>
+        <li>
+          喜欢构建体验: 编辑器、静态站点、增量构建,
+          以及一切能让日常变流畅的东西。
+        </li>
+        <li>这个博客本身就一个试验:</li>
+        <li>
+          用 Astro 和 Vue 搭建, 后台用 Hono 和 PostgreSQL, 内容以 Markdown
+          托管在 Git 仓库。
+        </li>
+      </ul>
+
+      <h2 style="color: #12ad79;">interests</h2>
+      <ul>
+        <li>everything about Python</li>
         <li>前端工程化与构建工具链</li>
-        <li>交互设计与排版</li>
-        <li>非虚构阅读与读书笔记</li>
+        <li>纸质阅读与户外</li>
         <li>徒步与胶片摄影</li>
       </ul>
 
-      <h2>找到我</h2>
+      <h2 style="color: #12ad79;">Find me</h2>
       <p>
-        欢迎通过邮箱 <a href="mailto:hello@example.com">hello@example.com</a>
-        与我交流, 或者在各大平台找到我: 
+        欢迎通过邮箱 <a href="mailto:2022xh0071@hust.edu.cn"
+          >2022xh0071@hust.edu.cn</a
+        >
+        与我交流
+      </p>
+      <p class="weixin-row">
+        微信: <img
+          src="/about/weixin.jpg"
+          alt="微信二维码"
+          width="120"
+          height="120"
+        />
+        抖音: <img
+          src="/about/douyin.jpg"
+          alt="抖音二维码"
+          width="120"
+          height="120"
+        />
       </p>
       <ul>
-        <li><a href="https://github.com" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="https://www.zhihu.com" rel="noopener noreferrer">知乎</a></li>
+        <li>
+          <a
+            href="https://github.com/LFL20171121/specialBlog"
+            rel="noopener noreferrer">GitHub地址</a>
+        </li>
+
         <li><a href="/rss.xml">订阅本站 RSS</a></li>
       </ul>
 
       <blockquote>
-        <p>把想法写下来, 是对思考最诚实的检验。</p>
+        <p>把学习和生活记录下来, 朋友们</p>
       </blockquote>
     </article>
   </div>
 </BaseLayout>
+
+<style scoped>
+  /* flex 布局: 文字在左、图片在右, 垂直居中; 覆盖全局 img 的 display: block */
+  .weixin-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: bold;
+  }
+
+  .weixin-row img {
+    display: inline-block;
+    border-radius: 10px;
+  }
+
+  p {
+    color: #12ad79;
+  }
+</style>

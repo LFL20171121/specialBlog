@@ -1,9 +1,9 @@
 import { createHash, randomBytes } from 'node:crypto';
 import { and, eq, gt } from 'drizzle-orm';
-import { db } from '../db';
-import { profiles, sessions } from '../db/schema';
-import { env } from '../env';
-import type { SessionUser } from '../types';
+import { db } from '@/db';
+import { profiles, sessions } from '@/db/schema';
+import { env } from '@/env';
+import type { SessionUser } from '@/types';
 
 export const sessionCookieName = 'blog_session';
 

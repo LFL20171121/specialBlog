@@ -1,8 +1,8 @@
 import { and, eq, isNull, lte, or } from 'drizzle-orm';
-import { db } from '../db';
-import { syncJobs } from '../db/schema';
-import { env } from '../env';
-import { processSyncJob } from '../services/sync';
+import { db } from '@/db';
+import { syncJobs } from '@/db/schema';
+import { env } from '@/env';
+import { processSyncJob } from '@/services/sync';
 
 /** 每轮最多处理的任务数, 避免单轮长时间阻塞 */
 const BATCH_SIZE = 5;

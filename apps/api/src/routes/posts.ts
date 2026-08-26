@@ -1,12 +1,12 @@
 import { Hono } from 'hono';
 import { and, desc, eq, sql } from 'drizzle-orm';
 import { z } from 'zod';
-import { db } from '../db';
-import { comments, likes, profiles } from '../db/schema';
-import { parseJsonBody } from '../lib/validation';
-import { requireUser } from '../middleware/auth';
-import { rateLimit } from '../middleware/rateLimit';
-import type { AppEnv } from '../types';
+import { db } from '@/db';
+import { comments, likes, profiles } from '@/db/schema';
+import { parseJsonBody } from '@/lib/validation';
+import { requireUser } from '@/middleware/auth';
+import { rateLimit } from '@/middleware/rateLimit';
+import type { AppEnv } from '@/types';
 
 /**
  * 文章互动路由: /api/posts

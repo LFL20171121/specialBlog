@@ -1,8 +1,8 @@
 import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { desc, eq } from 'drizzle-orm';
-import { db } from '../../db';
-import { postDrafts, syncJobs } from '../../db/schema';
+import { db } from '@/db';
+import { postDrafts, syncJobs } from '@/db/schema';
 
 /** 同步任务查询与手动重试: /api/admin/sync-jobs */
 export const adminSyncRoutes = new Hono();

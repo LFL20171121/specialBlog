@@ -2,10 +2,10 @@ import { Hono } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { desc, eq } from 'drizzle-orm';
 import { z } from 'zod';
-import { db } from '../../db';
-import { comments, postDrafts, profiles } from '../../db/schema';
-import { parseJsonBody } from '../../lib/validation';
-import type { AppEnv } from '../../types';
+import { db } from '@/db';
+import { comments, postDrafts, profiles } from '@/db/schema';
+import { parseJsonBody } from '@/lib/validation';
+import type { AppEnv } from '@/types';
 
 /** 评论审核: /api/admin/comments(requireAdmin 由聚合路由统一挂载)  */
 export const adminCommentRoutes = new Hono<AppEnv>();

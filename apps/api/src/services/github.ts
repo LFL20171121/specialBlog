@@ -1,5 +1,5 @@
-import { env, isGithubConfigured } from '../env';
-import type { PostDraft } from '../db/schema';
+import { env, isGithubConfigured } from '@/env';
+import type { PostDraft } from '@/db/schema';
 
 const API_BASE = 'https://api.github.com';
 

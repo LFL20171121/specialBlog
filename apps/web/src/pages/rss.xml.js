@@ -1,12 +1,12 @@
 import rss from '@astrojs/rss';
-import { getPublishedPosts } from '../lib/posts';
+import { getPublishedPosts } from '@/lib/posts';
 
 /** RSS 订阅源: 构建期生成静态 XML */
 export async function GET(context) {
   const posts = await getPublishedPosts();
 
   return rss({
-    title: '星河博客',
+    title: '博客L@G',
     description: '一个关于技术、阅读与生活的个人博客',
     site: context.site,
     items: posts.map((post) => ({

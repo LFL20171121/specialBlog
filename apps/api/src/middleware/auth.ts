@@ -1,7 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import { getCookie } from 'hono/cookie';
-import { getSessionUser, sessionCookieName } from '../services/session';
-import type { AppEnv, SessionUser } from '../types';
+import { getSessionUser, sessionCookieName } from '@/services/session';
+import type { AppEnv, SessionUser } from '@/types';
 
 /**
  * 会话中间件: 解析 HttpOnly Cookie 中的会话令牌, 

@@ -3,10 +3,10 @@ import { HTTPException } from 'hono/http-exception';
 import { and, desc, eq, inArray } from 'drizzle-orm';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import { db } from '../../db';
-import { postDrafts, syncJobs } from '../../db/schema';
-import { parseJsonBody } from '../../lib/validation';
-import type { AppEnv } from '../../types';
+import { db } from '@/db';
+import { postDrafts, syncJobs } from '@/db/schema';
+import { parseJsonBody } from '@/lib/validation';
+import type { AppEnv } from '@/types';
 
 /** 草稿管理: /api/admin/drafts(requireAdmin 由聚合路由统一挂载)  */
 export const adminDraftRoutes = new Hono<AppEnv>();

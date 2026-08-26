@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostCard from '../../components/PostCard.astro';
-import { getPublishedPosts } from '../../lib/posts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { getPublishedPosts } from '@/lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -16,7 +16,7 @@ const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
 
-<BaseLayout title={`标签「${tag}」· 星河博客`} description={`标签「${tag}」下的全部文章`}>
+<BaseLayout title={`标签「${tag}」· 博客L@G`} description={`标签「${tag}」下的全部文章`}>
   <div class="container">
     <header class="page-header">
       <h1>标签: {tag}</h1>

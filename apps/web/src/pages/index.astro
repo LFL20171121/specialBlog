@@ -1,16 +1,16 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PostCard from '../components/PostCard.astro';
-import { getFeaturedPosts, getPublishedPosts } from '../lib/posts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostCard from '@/components/PostCard.astro';
+import { getFeaturedPosts, getPublishedPosts } from '@/lib/posts';
 
 const featuredPosts = await getFeaturedPosts();
 const latestPosts = (await getPublishedPosts()).slice(0, 6);
 ---
 
-<BaseLayout title="星河博客 · 首页">
+<BaseLayout title="博客L@G · 首页">
   <section class="hero">
     <div class="container">
-      <h1>你好, 我是<span class="gradient-text">星河</span></h1>
+      <h1>你好, 我是<span class="gradient-text">顾赛赛</span></h1>
       <p>一个爱写代码也爱写字的人。这里记录我的技术探索、阅读笔记, 以及一些关于生活的胡思乱想。</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="/posts/">开始阅读</a>

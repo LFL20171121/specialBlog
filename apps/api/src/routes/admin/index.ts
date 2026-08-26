@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
-import { requireAdmin } from '../../middleware/auth';
-import type { AppEnv } from '../../types';
+import { requireAdmin } from '@/middleware/auth';
+import type { AppEnv } from '@/types';
 import { adminDraftRoutes } from './drafts';
 import { adminCommentRoutes } from './comments';
 import { adminSyncRoutes } from './sync';

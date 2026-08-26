@@ -1,10 +1,10 @@
 ---
 import { render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import PostToc from '../../components/PostToc.astro';
-import LikeButton from '../../components/vue/LikeButton.vue';
-import CommentSection from '../../components/vue/CommentSection.vue';
-import { extractHeadings, formatDate, getPublishedPosts } from '../../lib/posts';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PostToc from '@/components/PostToc.astro';
+import LikeButton from '@/components/vue/LikeButton.vue';
+import CommentSection from '@/components/vue/CommentSection.vue';
+import { extractHeadings, formatDate, getPublishedPosts } from '@/lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPublishedPosts();
@@ -16,7 +16,7 @@ const { Content } = await render(post);
 const headings = extractHeadings(post.body ?? '');
 ---
 
-<BaseLayout title={`${post.data.title} · 星河博客`} description={post.data.description}>
+<BaseLayout title={`${post.data.title} · 博客L@G`} description={post.data.description}>
   <div class="container">
     <div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
 

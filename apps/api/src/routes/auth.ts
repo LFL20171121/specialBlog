@@ -4,17 +4,17 @@ import { deleteCookie, getCookie, setCookie } from 'hono/cookie';
 import { eq } from 'drizzle-orm';
 import { hash, verify } from '@node-rs/argon2';
 import { z } from 'zod';
-import { db } from '../db';
-import { profiles } from '../db/schema';
-import { parseJsonBody } from '../lib/validation';
-import { rateLimit } from '../middleware/rateLimit';
+import { db } from '@/db';
+import { profiles } from '@/db/schema';
+import { parseJsonBody } from '@/lib/validation';
+import { rateLimit } from '@/middleware/rateLimit';
 import {
   createSession,
   destroySession,
   sessionCookieName,
   sessionCookieOptions,
-} from '../services/session';
-import type { AppEnv, SessionUser } from '../types';
+} from '@/services/session';
+import type { AppEnv, SessionUser } from '@/types';
 
 /** 认证相关路由: /api/auth */
 export const authRoutes = new Hono<AppEnv>();
