@@ -1,0 +1,270 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "星河博客 · 运行时架构",
+    "locale": "zh-CN",
+    "quality_profile": "showcase",
+    "output": "runtime-architecture.html",
+    "repository": {
+      "url": "https://github.com/LFL20171121/specialBlog",
+      "revision": "2b3ee67bd6a36b4da47b64c4a9626ede04a76d6a"
+    },
+    "viewBox": [1390, 780],
+    "views": [
+      {
+        "id": "publish-path",
+        "label": "发布管线",
+        "focus": ["admin-ui", "admin-api", "pg", "worker", "github", "repo"],
+        "note": "草稿从管理后台到 GitHub 仓库的异步同步主路径。"
+      },
+      {
+        "id": "trust",
+        "label": "信任边界",
+        "focus": ["browser", "auth", "admin-api"],
+        "note": "会话认证与管理员权限校验的入口。"
+      },
+      {
+        "id": "reader",
+        "label": "读者路径",
+        "focus": ["repo", "web", "browser"],
+        "note": "Markdown 经内容集合与静态渲染到达读者。"
+      }
+    ]
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "浏览器",
+      "sublabel": "访客 + 管理员",
+      "pos": [40, 328],
+      "size": [170, 80]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Astro 前台",
+      "sublabel": ":4321 · 静态渲染 + 内容集合",
+      "pos": [510, 88],
+      "size": [165, 84],
+      "sources": [
+        { "path": "apps/web/src/content.config.ts", "label": "内容集合" },
+        { "path": "apps/web/src/pages/index.astro", "label": "首页" }
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "认证 /api/auth",
+      "sublabel": "Argon2id · 会话 Cookie",
+      "pos": [290, 328],
+      "size": [160, 76],
+      "sources": [
+        { "path": "apps/api/src/routes/auth.ts", "label": "认证路由" },
+        { "path": "apps/api/src/services/session.ts", "label": "会话服务" }
+      ]
+    },
+    {
+      "id": "admin-ui",
+      "type": "frontend",
+      "label": "Vue 管理岛屿",
+      "sublabel": "AdminEditor · PostList",
+      "brand": "vue",
+      "pos": [290, 560],
+      "size": [165, 80],
+      "sources": [
+        { "path": "apps/web/src/pages/admin/index.astro", "label": "后台页面" },
+        { "path": "apps/web/src/components/vue/AdminPostList.vue", "label": "文章管理" }
+      ]
+    },
+    {
+      "id": "admin-api",
+      "type": "backend",
+      "label": "管理路由 /api/admin",
+      "sublabel": "草稿 · 发布 · 审核",
+      "pos": [505, 560],
+      "size": [165, 84],
+      "sources": [
+        { "path": "apps/api/src/routes/admin/drafts.ts", "label": "草稿与发布" },
+        { "path": "apps/api/src/middleware/auth.ts", "label": "requireAdmin" }
+      ]
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "personal_blog · blog schema",
+      "brand": "postgresql",
+      "pos": [735, 328],
+      "size": [165, 80],
+      "sources": [
+        { "path": "apps/api/src/db/schema.ts", "label": "六张核心表" }
+      ]
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "syncWorker",
+      "sublabel": "15s 轮询 · 指数退避重试",
+      "pos": [735, 560],
+      "size": [165, 80],
+      "sources": [
+        { "path": "apps/api/src/workers/syncWorker.ts", "label": "轮询调度" },
+        { "path": "apps/api/src/services/sync.ts", "label": "任务处理" }
+      ]
+    },
+    {
+      "id": "github",
+      "type": "cloud",
+      "label": "GitHub Contents API",
+      "sublabel": "api.github.com · PAT 令牌",
+      "brand": "github",
+      "pos": [960, 560],
+      "size": [165, 80],
+      "sources": [
+        { "path": "apps/api/src/services/github.ts", "label": "upsertMarkdown" }
+      ]
+    },
+    {
+      "id": "repo",
+      "type": "external",
+      "label": "Git 仓库",
+      "sublabel": "content/posts · Markdown",
+      "pos": [1175, 560],
+      "size": [165, 80],
+      "sources": [
+        { "path": "apps/web/src/content/posts/hello-world.md", "label": "已发布文章" }
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "本地运行时 · localhost",
+      "wraps": ["web", "auth", "admin-ui", "admin-api", "pg", "worker"]
+    },
+    {
+      "kind": "security-group",
+      "label": "requireAdmin 信任边界",
+      "wraps": ["admin-api"]
+    },
+    {
+      "kind": "region",
+      "label": "GitHub.com · GITHUB_TOKEN",
+      "wraps": ["github", "repo"]
+    }
+  ],
+  "connections": [
+    {
+      "id": "draft-write",
+      "from": "admin-ui",
+      "to": "admin-api",
+      "label": "写草稿 · 发布",
+      "variant": "emphasis",
+      "labelDy": 64
+    },
+    {
+      "id": "draft-store",
+      "from": "admin-api",
+      "to": "pg",
+      "label": "草稿入库 · 建 sync_job",
+      "variant": "emphasis"
+    },
+    {
+      "id": "job-poll",
+      "from": "pg",
+      "to": "worker",
+      "label": "到期任务 · 15s 轮询",
+      "variant": "emphasis",
+      "labelDy": 36
+    },
+    {
+      "id": "md-put",
+      "from": "worker",
+      "to": "github",
+      "label": "PUT Markdown · base64",
+      "variant": "emphasis",
+      "labelDy": 64
+    },
+    {
+      "id": "md-commit",
+      "from": "github",
+      "to": "repo",
+      "label": "commit",
+      "variant": "emphasis"
+    },
+    {
+      "id": "content-pull",
+      "from": "repo",
+      "to": "web",
+      "label": "git pull · glob 内容集合",
+      "variant": "emphasis",
+      "fromSide": "top",
+      "toSide": "top",
+      "via": [[1257.5, 44], [592.5, 44]]
+    },
+    {
+      "id": "page-render",
+      "from": "web",
+      "to": "browser",
+      "label": "渲染文章页",
+      "variant": "emphasis",
+      "fromSide": "left",
+      "toSide": "top"
+    },
+    {
+      "id": "login",
+      "from": "browser",
+      "to": "auth",
+      "label": "登录 · Cookie",
+      "variant": "security"
+    },
+    {
+      "id": "session-verify",
+      "from": "auth",
+      "to": "pg",
+      "label": "sessions · profiles 校验",
+      "variant": "default"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "发布管线 (主路径)",
+      "items": [
+        "发布接口立即返回 202, 由 sync_jobs 表异步驱动",
+        "Worker 原子抢占任务 · 指数退避重试 (10s→10min, 最多 5 次)",
+        "幂等: (draftId, revision) 去重, 重复点击发布安全"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "数据分工",
+      "items": [
+        "PostgreSQL 六表: profiles / sessions / post_drafts / comments / likes / sync_jobs",
+        "已发布 Markdown 只存 Git 仓库, 永不进数据库",
+        "contentId (UUID) 终身不变, 评论点赞挂载其上"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "信任边界",
+      "items": [
+        "会话令牌 SHA-256 哈希落库, HttpOnly Cookie 下发",
+        "requireAdmin 守卫全部 /api/admin 子路由",
+        "注册接口只能创建 user 角色, admin 仅限服务端种子",
+        "GITHUB_TOKEN (PAT) 需 Contents 读写 · 认证限流 10 次/分/IP"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "读者互动 API",
+      "items": [
+        "评论 / 点赞走 /api/posts, 按 contentId 关联文章",
+        "评论默认 pending, 后台审核通过后前台可见",
+        "点赞 (user_id, content_id) 唯一约束防重复"
+      ]
+    }
+  ]
+}
